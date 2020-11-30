@@ -1,0 +1,217 @@
+#WELCOME TO THE MOST JERRY RIGGED YOTTA SAVINGS CODE EVER 
+#CRED GOES TO STACK EXCHANGE FOR BITS AND PIECES GLUED TOGETHER
+
+#Libraries
+library(lubridate)
+library(plyr)
+library(scales)
+
+#Bank variables
+  apy <- 0.002
+  monthlyapy <- (1+apy)^(1/12)-1
+
+#Plotting
+  dataset=NULL
+  
+#Simulation
+
+iterationcounter <- 0
+while (iterationcounter != 8260307055){
+  
+  currentdate <- as.Date("2021-01-03")
+  enddate <- as.Date("2122-01-03")
+  startbalance <- 25.00
+  currentbalance <- startbalance
+  averagebalance <- 0
+  averagedays <- 1
+  
+  while (currentdate != enddate){
+    
+    #If today is the first you get interest on the average of the monthly balance
+    if (day(currentdate)==1){ 
+      averagebalance <- averagebalance / averagedays
+      currentbalance <- currentbalance + averagebalance * monthlyapy
+      averagebalance <- currentbalance
+      averagedays <- 1
+    
+      #If today is the first and a sunday you also get to see if you won money
+      if (weekdays(currentdate)=='Sunday'){
+        ticketNum <- currentbalance / 25
+        ticketNumFloor <- floor(ticketNum)
+        
+        winning.ticket=NULL
+        winning.ticket=list(winning.ticket)
+        for (i in 1:ticketNumFloor){ 
+          winning.ticket[[i]]= c(sort(sample(70,6)),sample(63,1))
+        }
+        ticket=NULL
+        ticket=list(ticket)
+        for (i in 1:ticketNumFloor){ 
+          ticket[[i]]= c(1:7)
+        }
+        sum.6w.1r=0
+        sum.6w=0
+        sum.5w.1r=0
+        sum.5w=0
+        sum.4w.1r=0
+        sum.4w=0
+        sum.3w.1r=0
+        sum.3w=0
+        sum.2w.1r=0
+        sum.2w=0
+        sum.1w.1r=0
+        sum.1w=0
+        sum.1r=0
+        win.ticket=NULL
+        win.ticket=list(win.ticket)
+        for(i in 1:ticketNumFloor){
+          if (sum(ticket[[i]]==winning.ticket[[i]])==7){
+            sum.6w.1r=sum.6w.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]==winning.ticket[[i]][1:6])==6){
+            sum.6w=sum.6w+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==5 && sum(ticket[[i]][6]==winning.ticket[[i]][7])==1){
+            sum.5w.1r=sum.5w.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]==winning.ticket[[i]][1:6])==5){
+            sum.5w=sum.5w+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==4 && sum(ticket[[i]][6]==winning.ticket[[i]][7])==1){
+            sum.4w.1r=sum.4w.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==4){
+            sum.4w=sum.4w+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==3 && sum(ticket[[i]][6]==winning.ticket[[i]][7])==1){
+            sum.3w.1r=sum.3w.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==3){
+            sum.3w=sum.3w+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==2 && sum(ticket[[i]][6]==winning.ticket[[i]][7])==1){
+            sum.2w.1r=sum.2w.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][7]==winning.ticket[[i]][7])==2){
+            sum.2w=sum.2w+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==1 && sum(ticket[[i]][6]==winning.ticket[[i]][7])==1){
+            sum.1w.1r=sum.1w.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]==winning.ticket[[i]][1:6])==1){
+            sum.1w=sum.1w+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][7]==winning.ticket[[i]][7])==1){
+            sum.1r=sum.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+        }
+        winnings=sum.6w.1r*0+sum.6w*0+sum.5w.1r*0+sum.5w*0+sum.4w.1r*0+sum.4w*10+sum.3w.1r*7+sum.3w*0.25+sum.2w.1r*0.60+sum.2w*0+sum.1w.1r*0.15+sum.1w*0+sum.1r*0.1
+        currentbalance <- currentbalance + winnings
+        averagebalance <- averagebalance + currentbalance
+        averagedays <- averagedays + 1
+        currentdate <- currentdate + 1
+      }
+      
+      #If it's the first but not a sunday then you only make interest
+      else {
+        averagebalance <- averagebalance + currentbalance
+        currentdate <- currentdate + 1
+      }
+      
+    }
+    
+    #If today is not the first of the month check for lottery day
+    else {
+      
+      #If it is lottery day run the lottery
+      if (weekdays(currentdate)=='Sunday'){
+        ticketNum <- currentbalance / 25
+        ticketNumFloor <- floor(ticketNum)
+        
+        winning.ticket=NULL
+        winning.ticket=list(winning.ticket)
+        for (i in 1:ticketNumFloor){ 
+          winning.ticket[[i]]= c(sort(sample(70,6)),sample(63,1))
+        }
+        ticket=NULL
+        ticket=list(ticket)
+        for (i in 1:ticketNumFloor){ 
+          ticket[[i]]= c(1:7)
+        }
+        sum.6w.1r=0
+        sum.6w=0
+        sum.5w.1r=0
+        sum.5w=0
+        sum.4w.1r=0
+        sum.4w=0
+        sum.3w.1r=0
+        sum.3w=0
+        sum.2w.1r=0
+        sum.2w=0
+        sum.1w.1r=0
+        sum.1w=0
+        sum.1r=0
+        win.ticket=NULL
+        win.ticket=list(win.ticket)
+        for(i in 1:ticketNumFloor){
+          if (sum(ticket[[i]]==winning.ticket[[i]])==7){
+            sum.6w.1r=sum.6w.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]==winning.ticket[[i]][1:6])==6){
+            sum.6w=sum.6w+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==5 && sum(ticket[[i]][6]==winning.ticket[[i]][7])==1){
+            sum.5w.1r=sum.5w.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]==winning.ticket[[i]][1:6])==5){
+            sum.5w=sum.5w+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==4 && sum(ticket[[i]][6]==winning.ticket[[i]][7])==1){
+            sum.4w.1r=sum.4w.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==4){
+            sum.4w=sum.4w+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==3 && sum(ticket[[i]][6]==winning.ticket[[i]][7])==1){
+            sum.3w.1r=sum.3w.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==3){
+            sum.3w=sum.3w+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==2 && sum(ticket[[i]][6]==winning.ticket[[i]][7])==1){
+            sum.2w.1r=sum.2w.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][7]==winning.ticket[[i]][7])==2){
+            sum.2w=sum.2w+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]%in%winning.ticket[[i]][1:6])==1 && sum(ticket[[i]][6]==winning.ticket[[i]][7])==1){
+            sum.1w.1r=sum.1w.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][1:6]==winning.ticket[[i]][1:6])==1){
+            sum.1w=sum.1w+1
+            win.ticket[[i]]=ticket[[i]]}
+          else if(sum(ticket[[i]][7]==winning.ticket[[i]][7])==1){
+            sum.1r=sum.1r+1
+            win.ticket[[i]]=ticket[[i]]}
+        }
+        winnings=sum.6w.1r*0+sum.6w*0+sum.5w.1r*0+sum.5w*0+sum.4w.1r*0+sum.4w*10+sum.3w.1r*7+sum.3w*0.25+sum.2w.1r*0.60+sum.2w*0+sum.1w.1r*0.15+sum.1w*0+sum.1r*0.1
+        currentbalance <- currentbalance + winnings
+        averagebalance <- averagebalance + currentbalance
+        averagedays <- averagedays + 1
+        currentdate <- currentdate + 1
+      }
+      
+      #Otherwise simply increase the average for later
+      else {
+        averagebalance <- averagebalance + currentbalance
+        averagedays <- averagedays + 1
+        currentdate <- currentdate + 1
+      }
+    }
+  }
+mwrr = (1+(1+(currentbalance - startbalance) / startbalance)**(1/36890)-1)**365-1
+dataset[iterationcounter] <- percent(mwrr,0.01)
+iterationcounter <- iterationcounter + 1
+}
+y <- count(dataset)
+barplot(y$freq,names.arg = y$x)
