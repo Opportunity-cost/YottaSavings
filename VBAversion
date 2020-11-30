@@ -1,0 +1,176 @@
+Option Explicit
+
+Sub Yotta_Monte_Carlo()
+
+'Variables
+Dim iterations, simulation, average_days, lottery, chances, tickets As Variant
+    iterations = Range("H22").Value
+
+Dim start_date, current_date, end_date As Date
+    start_date = "1/3/2020"
+    current_date = start_date
+    end_date = "1/3/2121"
+
+Dim start_bal, running_bal, average_bal As Currency
+    start_bal = 25
+    running_bal = start_bal
+    average_bal = 0
+
+Dim mwrr As Variant 'mwrr stands for money weighted rate of return which is the same as irr or the internal rate of return
+
+Dim date_counter, end_date_counter, column_count, row As Variant
+    end_date_counter = DateDiff("d", start_date, end_date) + 1
+    row = 1
+
+Dim rng As Range: Set rng = Application.Range("Summary!M1:KQM1048576")
+Dim cel As Range
+
+        
+
+
+    
+'Monte Carlo
+
+For Each cel In rng.Cells
+    With cel
+    'For simulation = 1 To iterations
+        start_bal = 25
+        running_bal = start_bal
+        average_bal = 0
+        start_date = "1/3/2020"
+        current_date = start_date
+        end_date = "1/3/2121"
+'        Debug.Print (start_bal)
+'        Debug.Print (running_bal)
+'        Debug.Print (average_bal)
+'        Debug.Print (start_date)
+'        Debug.Print (current_date)
+'        Debug.Print (end_date)
+        
+    For date_counter = 1 To end_date_counter
+    
+        If Day(current_date) = 1 Then
+            average_bal = average_bal / average_days
+            running_bal = running_bal + average_bal * Range("A3").Value
+            average_bal = running_bal
+            average_days = 0
+'            Debug.Print (average_bal)
+'            Debug.Print (running_bal)
+'            Debug.Print (average_days)
+            
+                
+            If Weekday(current_date) = vbSunday Then 'First of the month and sunday
+                
+                tickets = WorksheetFunction.Floor(running_bal, 25) / 25
+                
+                For chances = 1 To tickets
+                    lottery = WorksheetFunction.RandBetween(1, iterations)
+'                    Debug.Print (lottery)
+'                    Debug.Print (iterations)
+                    
+                    If lottery <= CDbl(Range("k8").Value) Then
+                          running_bal = running_bal + Range("c26").Value
+                    ElseIf lottery <= CDbl(Range("k9").Value) Then
+                          running_bal = running_bal + Range("c27").Value
+                    ElseIf lottery <= CDbl(Range("k10").Value) Then
+                          running_bal = running_bal + Range("c28").Value
+                    ElseIf lottery <= CDbl(Range("k11").Value) Then
+                          running_bal = running_bal + Range("c29").Value
+                    ElseIf lottery <= CDbl(Range("k12").Value) Then
+                          running_bal = running_bal + Range("c30").Value
+                    ElseIf lottery <= CDbl(Range("k13").Value) Then
+                          running_bal = running_bal + Range("c31").Value
+                    ElseIf lottery <= CDbl(Range("k14").Value) Then
+                          running_bal = running_bal + Range("c32").Value
+                    ElseIf lottery <= CDbl(Range("k15").Value) Then
+                          running_bal = running_bal + Range("c33").Value
+                    ElseIf lottery <= CDbl(Range("k16").Value) Then
+                          running_bal = running_bal + Range("c34").Value
+                    ElseIf lottery <= CDbl(Range("k17").Value) Then
+                          running_bal = running_bal + Range("c35").Value
+                    ElseIf lottery <= CDbl(Range("k18").Value) Then
+                          running_bal = running_bal + Range("c36").Value
+                    ElseIf lottery <= CDbl(Range("k19").Value) Then
+                          running_bal = running_bal + Range("c37").Value
+                    ElseIf lottery <= CDbl(Range("k20").Value) Then
+                          running_bal = running_bal + Range("c38").Value
+                    ElseIf lottery <= CDbl(Range("k21").Value) Then
+                          running_bal = running_bal + Range("c39").Value
+                    End If
+                Next chances
+            
+                average_bal = average_bal + running_bal
+                average_days = average_days + 1
+                current_date = DateAdd("d", 1, current_date)
+                
+            Else 'If first of the month and not a sunday
+                average_bal = average_bal + running_bal
+                average_days = average_days + 1
+                current_date = DateAdd("d", 1, current_date)
+                
+            End If 'If first of the month
+            
+        Else 'If NOT the first of the month check for sundays
+        
+            If Weekday(current_date) = vbSunday Then 'NOT First of the month and sunday
+                
+                tickets = WorksheetFunction.Floor(running_bal, 25) / 25
+                
+                For chances = 1 To tickets
+                    lottery = WorksheetFunction.RandBetween(1, iterations) 'Range("H22").Value)
+                    
+                    If lottery <= CDbl(Range("k8").Value) Then
+                          running_bal = running_bal + Range("c26").Value
+                    ElseIf lottery <= CDbl(Range("k9").Value) Then
+                          running_bal = running_bal + Range("c27").Value
+                    ElseIf lottery <= CDbl(Range("k10").Value) Then
+                          running_bal = running_bal + Range("c28").Value
+                    ElseIf lottery <= CDbl(Range("k11").Value) Then
+                          running_bal = running_bal + Range("c29").Value
+                    ElseIf lottery <= CDbl(Range("k12").Value) Then
+                          running_bal = running_bal + Range("c30").Value
+                    ElseIf lottery <= CDbl(Range("k13").Value) Then
+                          running_bal = running_bal + Range("c31").Value
+                    ElseIf lottery <= CDbl(Range("k14").Value) Then
+                          running_bal = running_bal + Range("c32").Value
+                    ElseIf lottery <= CDbl(Range("k15").Value) Then
+                          running_bal = running_bal + Range("c33").Value
+                    ElseIf lottery <= CDbl(Range("k16").Value) Then
+                          running_bal = running_bal + Range("c34").Value
+                    ElseIf lottery <= CDbl(Range("k17").Value) Then
+                          running_bal = running_bal + Range("c35").Value
+                    ElseIf lottery <= CDbl(Range("k18").Value) Then
+                          running_bal = running_bal + Range("c36").Value
+                    ElseIf lottery <= CDbl(Range("k19").Value) Then
+                          running_bal = running_bal + Range("c37").Value
+                    ElseIf lottery <= CDbl(Range("k20").Value) Then
+                          running_bal = running_bal + Range("c38").Value
+                    ElseIf lottery <= CDbl(Range("k21").Value) Then
+                          running_bal = running_bal + Range("c39").Value
+                    End If
+            Next chances
+        
+            average_bal = average_bal + running_bal
+            average_days = average_days + 1
+            current_date = DateAdd("d", 1, current_date)
+            
+            Else 'If NOT the first of the month and not a sunday
+                average_bal = average_bal + running_bal
+                average_days = average_days + 1
+                current_date = DateAdd("d", 1, current_date)
+                
+            End If 'If first of the month
+            
+        End If 'If NOT first of month
+    
+   Next date_counter
+   
+    mwrr = (1 + (1 + (1 + (running_bal - start_bal) / start_bal - 1)) ^ (1 / (DateDiff("d", start_date, end_date) + 1)) - 1) ^ 365 - 1
+    .Value = mwrr
+    'row = row + 1
+    'Debug.Print (mwrr)
+        
+    'Next simulation
+    End With 'KQM 7877.6
+Next cel
+End Sub
